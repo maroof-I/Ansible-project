@@ -1,0 +1,4 @@
+ssl_cert_dir: /etc/pki/tls/certs/
+httpd_conf_path: /etc/httpd/conf/httpd.conf.mine
+state: latest
+min_ram_mb: 512

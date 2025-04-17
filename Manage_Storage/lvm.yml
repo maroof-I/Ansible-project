@@ -1,0 +1,43 @@
+---
+- name: managing LVM logical volumes
+  hosts: all
+  vars:
+    - volume_group: vgcontainer
+    - logical_volume: lvdolfinlab
+    - mount_point: /mnt/vgdolphinlab
+  tasks:
+    - name: create a volume group at /dev/sdc
+      community.general.lvg:
+        vg: "{{volume_group}}"
+        pvs: /dev/sdc
+        pesize: 10
+
+    - name: create a new volume group
+      community.general.lvol:
+        vg: "{{volume_group}}"
+        lv: "{{logical_volume}}"
+        size: 400M
+
+    - name: create the {{mount_point}}
+      ansible.builtin.file:
+        path: "{{mount_point}}"
+        state: directory
+
+    - name: formatting the logical volume to XFS
+      community.general.filesystem:
+        fstype: xfs
+        dev: /dev/{{volume_group}}/{{logical_volume}}
+
+    - name: mounting the logical volume
+      mount:
+        path: "{{mount_point}}"
+        src: /dev/{{volume_group}}/{{logical_volume}}
+        fstype: xfs
+        state: mounted
+
+    - name: resize the logical volume
+      community.general.lvol:
+        vg: "{{volume_group}}"
+        lv: "{{logical_volume}}"
+        size: 900M
+        resizefs: true

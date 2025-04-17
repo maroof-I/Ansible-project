@@ -1,0 +1,30 @@
+---
+- name: Create 1GB swap partition and enable it
+  hosts: localhost
+  vars:
+    swap_device: /dev/sdb
+    swap_part: /dev/sdb2
+
+  tasks:
+    - name: Create 1GB swap partition
+      community.general.parted:
+        device: "{{ swap_device }}"
+        number: 2
+        state: present
+        part_start: 400MB
+        part_end: 1.4GB
+
+    - name: Format the partition as swap
+      command: mkswap {{ swap_part }}
+
+    - name: Enable the swap
+      command: swapon {{ swap_part }}
+
+    - name: Ensure swap is added to /etc/fstab
+      mount:
+        name: none
+        src: "{{ swap_part }}"
+        fstype: swap
+        opts: sw
+        state: present
+

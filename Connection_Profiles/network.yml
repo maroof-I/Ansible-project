@@ -1,0 +1,20 @@
+---
+- name: configuring networks using ansible
+  hosts: managed1
+  tasks:
+    - name: adding connection profile for a NIC
+      community.general.nmcli:
+        conn_name: lab
+        ifname: ens18
+        type: ethernet
+        ip4: 
+          - 53.0.35.99
+          - 192.168.1.18/24
+        gw4: 53.0.35.254
+        dns4: 53.0.35.50
+        autoconnect: true
+        state: present
+
+    - name: changing hostname
+      ansible.builtin.hostname:
+        name: "node1.ansible.dolfined.com"

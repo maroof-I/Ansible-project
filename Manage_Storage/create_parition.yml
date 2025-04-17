@@ -1,0 +1,24 @@
+---
+- name: managing storage
+  hosts: localhost
+  tasks:
+    - name: create a 400 mg parition in /dev/sdb1
+      community.general.parted:
+        device: /dev/sdb
+        number: 1
+        part_start: 0%
+        part_end: 400MB
+        state: present
+        fs_type: ext4
+
+    - name: creating the mounted directory
+      file:
+        path: /user
+        state: directory
+
+    - name: mounting the created partition 
+      ansible.posix.mount:
+        name: /soma
+        src: /dev/sbd1
+        fstype: ext4
+        state: mounted

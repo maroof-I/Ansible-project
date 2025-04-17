@@ -1,0 +1,5 @@
+---
+- name: send fail message if requirements does not met
+  ansible.builtin.fail:
+    msg: requirements not sufficient
+  when: ansible_facts['memtotal_mb'] < min_ram_mb or ansible_facts['distribution'] not in ['RedHat', 'Rocky']

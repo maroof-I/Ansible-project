@@ -1,0 +1,7 @@
+---
+# handlers file for roles/web
+
+- name: web_changed
+  ansible.builtin.service:
+    name: "{{ service_name }}"
+    state: restarted

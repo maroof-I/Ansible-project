@@ -1,0 +1,14 @@
+this is host: {{ansible_hostname}} 
+
+and the ipv6 address associated with it is:
+
+ipv6 HOSTNAME
+
+{% for iface in ansible_interfaces %}
+  {% set interface = hostvars[inventory_hostname]['ansible_' + iface] %}
+  {% if interface.ipv6 is defined %}
+    {% for ipv6 in interface.ipv6 %}
+      {{ ipv6.address }} ({{ iface }})
+    {% endfor %}
+  {% endif %}
+{% endfor %}

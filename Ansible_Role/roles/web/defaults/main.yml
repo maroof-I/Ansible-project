@@ -1,0 +1,4 @@
+---
+# defaults file for roles/web
+package_name: httpd
+service_name: httpd

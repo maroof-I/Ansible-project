@@ -1,0 +1,9 @@
+---
+- name: delete
+  hosts: localhost
+  tasks:
+    - name: delete /dev/sdb1
+      parted:
+        device: /dev/sdb
+        number: 1
+        state: absent

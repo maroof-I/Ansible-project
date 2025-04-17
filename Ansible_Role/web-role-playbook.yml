@@ -1,0 +1,5 @@
+---
+- name: Role web
+  hosts: all
+  roles:
+    - web

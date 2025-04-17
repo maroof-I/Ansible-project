@@ -1,0 +1,34 @@
+---
+- name: Managing httpd service
+  hosts: production
+  vars_files:
+    - vars.yml
+  serial: 1
+  tasks:
+    - include_tasks: check-requirements.yml
+    - include_tasks: install-httpd.yml
+    
+    - name: checking errors
+      block:
+        - name: insure the {{ ssl_cert_dir }} is inside host
+          ansible.builtin.file:
+            path: "{{ ssl_cert_dir }}"
+            state: directory
+          notify: check_httpd_conf
+      
+        - name: copying httpd configuration file to the production hosts
+          ansible.builtin.copy:
+            src: 'httpd.conf.j2'
+            dest: "{{ httpd_conf_path }}"
+          notify: check_httpd_conf
+
+      rescue:
+        - name: failed alert
+          ansible.builtin.debug:
+            msg: " One or more of the configuration changes failed, but the web service is still active."
+
+  handlers:
+    - name: check_httpd_conf
+      ansible.builtin.service:
+        name: httpd
+        state: restarted

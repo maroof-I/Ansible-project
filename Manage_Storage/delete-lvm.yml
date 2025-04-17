@@ -1,0 +1,13 @@
+---
+- name: hello there
+  hosts: all
+  vars:
+    - volume_group: vgcontainer
+    - logical_volume: lvdolfinlab
+  tasks:
+    - name: Remove the logical volume.
+      community.general.lvol:
+        vg: "{{volume_group}}"
+        lv: "{{logical_volume}}"
+        state: absent
+        force: true
