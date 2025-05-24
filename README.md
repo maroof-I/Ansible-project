@@ -116,6 +116,6 @@ Sets up a basic SSH configuration for Ansible control node access and environmen
 3. **Run storage or HTTPD-specific tasks:**
    ```bash
    ansible-playbook lvm.yml --check -v # you need to have ansible.cfg and inventory.ini
-   ansible-playbook HTTPD_Status/install-httpd.yml -e state=latest # you need to have ansible.cfg and inventory.ini
+   ansible-playbook block-play.yml --check -v # you need to have ansible.cfg and inventory.ini
    ```
 
