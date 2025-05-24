@@ -1,6 +1,6 @@
 # Ansible Automation Repository
 
-This repository is a structured Ansible workspace designed to automate a variety of system administration tasks, including software installation, web server configuration, SSH environment setup, storage management, and connection profiling. It is modular, reusable, and aligns with Ansible best practices through the use of roles and organized playbooks.
+This repository is a structured Ansible workspace designed to automate a variety of system administration tasks, including software installation, web server configuration, SSH environment setup, storage management, and connection profiling.
 
 ---
 
@@ -33,19 +33,17 @@ Automates Linux storage management tasks such as creating partitions, setting up
 ### `Setup_SSH/`
 Prepares the environment for secure and automated Ansible communication via SSH. It includes configuration files and playbooks for initializing SSH keys and other connection prerequisites.
 
----
-
 
 ---
 
-## 📦 Ansible_Role
+## Ansible_Role
 
 ### Description
 This is the heart of the repository, using **Ansible roles** to modularize configuration management. It includes:
 
-- ✅ **geerlingguy.git** – Installs and configures Git.
-- ✅ **geerlingguy.nfs** – Sets up an NFS server with OS-specific configurations.
-- ✅ **web** – A custom role that deploys a basic web server with a templated index page.
+-  **geerlingguy.git** – Installs and configures Git.
+-  **geerlingguy.nfs** – Sets up an NFS server with OS-specific configurations.
+-  **web** – A custom role that deploys a basic web server with a templated index page.
 
 ### Key Files
 
@@ -56,17 +54,17 @@ This is the heart of the repository, using **Ansible roles** to modularize confi
 
 ---
 
-## 🌐 Connection_Profiles
+## Connection_Profiles
 
 ### Description
 Defines and manages network profiles for system interfaces via the `network.yml` playbook.
 
 ---
 
-## 📡 HTTPD_Status
+##  HTTPD_Status
 
 ### Description
-Contains playbooks for deploying and validating an Apache HTTP server.
+Contains playbooks for managing an Apache HTTP server.
 
 ### Key Playbooks
 
@@ -78,7 +76,7 @@ Contains playbooks for deploying and validating an Apache HTTP server.
 
 ---
 
-## 💽 Manage_Storage
+##  Manage_Storage
 
 ### Description
 Automates Linux storage management using LVM and partitions.
@@ -92,7 +90,7 @@ Automates Linux storage management using LVM and partitions.
 
 ---
 
-## 🔐 Setup_SSH
+## Setup_SSH
 
 ### Description
 Sets up a basic SSH configuration for Ansible control node access and environment prep.
@@ -104,8 +102,20 @@ Sets up a basic SSH configuration for Ansible control node access and environmen
 
 ---
 
-## ✅ How to Use
+## How to Use
 
 1. **Install required roles** (for Ansible_Role):
    ```bash
    ansible-galaxy install -r Ansible_Role/requirements.yml
+   ```
+2. **Run a playbook, for example:**
+   ```bash
+   cd Ansible_Role
+   ansible-playbook web-role-playbook.yml -v
+   ```
+3. **Run storage or HTTPD-specific tasks:**
+   ```bash
+   ansible-playbook lvm.yml --check -v # you need to have ansible.cfg and inventory.ini
+   ansible-playbook HTTPD_Status/install-httpd.yml -e state=latest # you need to have ansible.cfg and inventory.ini
+   ```
+
