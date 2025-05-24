@@ -3,6 +3,7 @@
 This repository is a structured Ansible workspace designed to automate a variety of system administration tasks, including software installation, web server configuration, SSH environment setup, storage management, and connection profiling.
 
 ## Ansible repo Structure
+![Image](https://github.com/user-attachments/assets/9c195517-88a0-4286-99c7-be1f953c508f)
 
 ## Folder Structure Overview
 
